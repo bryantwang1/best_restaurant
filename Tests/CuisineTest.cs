@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using BestRestaurant.Objects;
 
 namespace BestRestaurant
 {
@@ -45,13 +46,13 @@ namespace BestRestaurant
         [Fact]
         public void Test_Save_AssignsIdToCuisineObject()
         {
-            Cuisine testCuisine = new Cuisine("Household chores");
+            Cuisine testCuisine = new Cuisine("Italian");
             testCuisine.Save();
 
             Cuisine savedCuisine = Cuisine.GetAll()[0];
 
-            int result = savedCuisine.GetId();
             int testId = testCuisine.GetId();
+            int result = savedCuisine.GetId();
 
             Assert.Equal(testId, result);
         }
@@ -59,7 +60,7 @@ namespace BestRestaurant
         [Fact]
         public void Test_Find_FindsCuisineInDatabase()
         {
-            Cuisine testCuisine = new Cuisine("Household chores");
+            Cuisine testCuisine = new Cuisine("Italian");
             testCuisine.Save();
 
             Cuisine foundCuisine = Cuisine.Find(testCuisine.GetId());
