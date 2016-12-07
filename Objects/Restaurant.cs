@@ -22,6 +22,24 @@ namespace BestRestaurant.Objects
             _cuisineId = restaurantCuisineId;
         }
 
+        public override bool Equals(System.Object otherRestaurant)
+        {
+            if (!(otherRestaurant is Restaurant))
+            {
+                return false;
+            }
+            else
+            {
+                Restaurant newRestaurant = (Restaurant) otherRestaurant;
+                bool idEquality = this.GetId() == newRestaurant.GetId();
+                bool nameEquality = this.GetName() == newRestaurant.GetName();
+                bool descriptionEquality = this.GetDescription() == newRestaurant.GetDescription();
+                bool priceEquality = this.GetPrice() == newRestaurant.GetPrice();
+                bool cuisineIdEquality = this.GetCuisineId() == newRestaurant.GetCuisineId();
+                return (idEquality && nameEquality && descriptionEquality && priceEquality && cuisineIdEquality);
+            }
+        }
+
         public void SetId(int newId)
         {
             _id = newId;
