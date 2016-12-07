@@ -90,7 +90,7 @@ namespace BestRestaurant.Objects
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO cuisines (name) OUTPUT INSERTED.id VALUES (@CuisineName)", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO cuisines (name) OUTPUT INSERTED.id VALUES (@CuisineName);", conn);
             SqlParameter nameParameter = new SqlParameter();
             nameParameter.ParameterName = "@CuisineName";
             nameParameter.Value = this.GetName();
@@ -125,7 +125,7 @@ namespace BestRestaurant.Objects
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM cuisines WHERE id = @CuisineId", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM cuisines WHERE id = @CuisineId;", conn);
             SqlParameter cuisineIdParameter = new SqlParameter();
             cuisineIdParameter.ParameterName = "@CuisineId";
             cuisineIdParameter.Value = searchId.ToString();

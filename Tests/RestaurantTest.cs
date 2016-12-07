@@ -68,20 +68,28 @@ namespace BestRestaurant
             Assert.Equal(testRestaurant, foundRestaurant);
         }
 
-        // [Fact]
-        // public void Test_Update_UpdatesRestaurantInDatabase()
-        // {
-        //     string name = "Chinese";
-        //     Restaurant testRestaurant = new Restaurant(name);
-        //     testRestaurant.Save();
-        //     string newName = "French";
-        //
-        //     testRestaurant.Update(newName);
-        //
-        //     string result = testCategory.GetName();
-        //
-        //     Assert.Equal(newName, result);
-        // }
+        [Fact]
+        public void Test_Update_UpdatesRestaurantInDatabase()
+        {
+            string name = "Tako";
+            string description = "Not a place to get tacos.";
+            string price = "$$";
+            int cuisineId = 1;
+            Restaurant testRestaurant = new Restaurant(name, description, price, cuisineId);
+            testRestaurant.Save();
+
+            string newName = "Mario\'s";
+            string newDescription = "Fresh pasta, fresh sauce.";
+            string newPrice = "$";
+            int newCuisineId = 2;
+            testRestaurant.Update(newName, newDescription, newPrice, newCuisineId);
+
+            Restaurant result = Restaurant.GetAll()[0];
+            int compareId = result.GetId();
+            Restaurant comparisonRestaurant = new Restaurant(newName, newDescription, newPrice, newCuisineId, compareId);
+
+            Assert.Equal(comparisonRestaurant, result);
+        }
 
         public void Dispose()
         {

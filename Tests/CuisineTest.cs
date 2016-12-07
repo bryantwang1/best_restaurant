@@ -78,7 +78,7 @@ namespace BestRestaurant
 
             testCuisine.Update(newName);
 
-            string result = testCategory.GetName();
+            string result = testCuisine.GetName();
 
             Assert.Equal(newName, result);
         }
@@ -86,6 +86,7 @@ namespace BestRestaurant
         public void Dispose()
         {
             Cuisine.DeleteAll();
+            Restaurant.DeleteAll();
         }
     }
 }
