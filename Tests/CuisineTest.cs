@@ -83,6 +83,27 @@ namespace BestRestaurant
             Assert.Equal(newName, result);
         }
 
+        [Fact]
+        public void Test_GetRestaurants_ReturnsAllRestaurantsWithinCategory()
+        {
+            Cuisine cuisine1 = new Cuisine("Japanese");
+            Cuisine cuisine2 = new Cuisine("Italian");
+            cuisine1.Save();
+            cuisine2.Save();
+
+            Restaurant restaurant1 = new Restaurant("Tako", "Not a place to get tacos.", "$", cuisine1.GetId());
+            Restaurant restaurant2 = new Restaurant("Mario\'s", "Fresh pasta, fresher sauce.", "$$", cuisine2.GetId());
+            Restaurant restaurant3 = new Restaurant("Peperoncini", "Focused on the flavor of tasty peperoncini.", "$", cuisine2.GetId());
+            restaurant1.Save();
+            restaurant2.Save();
+            restaurant3.Save();
+
+            List<Restaurant> expectedRestaurants = new List<Restaurant> { restaurant2, restaurant3 };
+            List<Restaurant> results = cuisine2.GetRestaurants();
+
+            Assert.Equal(expectedRestaurants, results);
+        }
+
         public void Dispose()
         {
             Cuisine.DeleteAll();

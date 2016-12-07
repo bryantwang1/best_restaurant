@@ -186,5 +186,43 @@ namespace BestRestaurant.Objects
                 conn.Close();
             }
         }
+
+        public List<Restaurant> GetRestaurants()
+        {
+            List<Restaurant> allRestaurants = new List<Restaurant> {};
+
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM restaurants WHERE cuisine_id = @CuisineId", conn);
+
+            SqlParameter idParameter = new SqlParameter();
+            idParameter.ParameterName = "@CuisineId";
+            idParameter.Value = this.GetId();
+            cmd.Parameters.Add(idParameter);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while(rdr.Read())
+            {
+                int restaurantId = rdr.GetInt32(0);
+                string restaurantName = rdr.GetString(1);
+                string restaurantDescription = rdr.GetString(2);
+                string restaurantPrice = rdr.GetString(3);
+                int restaurantCuisineId = rdr.GetInt32(4);
+
+                Restaurant newRestaurant = new Restaurant(restaurantName, restaurantDescription, restaurantPrice, restaurantCuisineId, restaurantId);
+                allRestaurants.Add(newRestaurant);
+            }
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+            return allRestaurants;
+        }
     }
 }
