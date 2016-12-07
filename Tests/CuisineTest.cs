@@ -104,6 +104,32 @@ namespace BestRestaurant
             Assert.Equal(expectedRestaurants, results);
         }
 
+        [Fact]
+        public void Test_Delete_DeletesCategoryFromDatabase()
+        {
+            Cuisine cuisine1 = new Cuisine("Japanese");
+            Cuisine cuisine2 = new Cuisine("Italian");
+            cuisine1.Save();
+            cuisine2.Save();
+
+            Restaurant restaurant1 = new Restaurant("Tako", "Not a place to get tacos.", "$", cuisine1.GetId());
+            Restaurant restaurant2 = new Restaurant("Mario\'s", "Fresh pasta, fresher sauce.", "$$", cuisine2.GetId());
+            Restaurant restaurant3 = new Restaurant("Peperoncini", "Focused on the flavor of tasty peperoncini.", "$", cuisine2.GetId());
+            restaurant1.Save();
+            restaurant2.Save();
+            restaurant3.Save();
+
+            cuisine2.Delete();
+            List<Cuisine> expectedCuisines = new List<Cuisine> { cuisine1 };
+            List<Cuisine> cuisineResults = Cuisine.GetAll();
+
+            List<Restaurant> expectedRestaurants = new List<Restaurant> { restaurant1 };
+            List<Restaurant> restaurantResults = Restaurant.GetAll();
+
+            Assert.Equal(expectedCuisines, cuisineResults);
+            Assert.Equal(expectedRestaurants, restaurantResults);
+        }
+
         public void Dispose()
         {
             Cuisine.DeleteAll();

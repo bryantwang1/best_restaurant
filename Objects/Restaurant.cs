@@ -265,7 +265,11 @@ namespace BestRestaurant.Objects
             cmd.Parameters.Add(restaurantIdParameter);
 
             cmd.ExecuteNonQuery();
-            conn.Close();
+
+            if(conn != null)
+            {
+                conn.Close();
+            }
         }
     }
 }
