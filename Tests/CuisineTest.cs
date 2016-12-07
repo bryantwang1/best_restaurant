@@ -105,7 +105,7 @@ namespace BestRestaurant
         }
 
         [Fact]
-        public void Test_Delete_DeletesCategoryFromDatabase()
+        public void Test_Delete_DeletesCuisineAndAssociatedRestaurantsFromDatabase()
         {
             Cuisine cuisine1 = new Cuisine("Japanese");
             Cuisine cuisine2 = new Cuisine("Italian");

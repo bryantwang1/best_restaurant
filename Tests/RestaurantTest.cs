@@ -91,6 +91,23 @@ namespace BestRestaurant
             Assert.Equal(comparisonRestaurant, result);
         }
 
+        [Fact]
+        public void Test_Delete_DeletesIndividualRestaurantFromDatabase()
+        {
+            Restaurant restaurant1 = new Restaurant("Tako", "Not a place to get tacos.", "$", 1);
+            Restaurant restaurant2 = new Restaurant("Mario\'s", "Fresh pasta, fresher sauce.", "$$", 1);
+            Restaurant restaurant3 = new Restaurant("Peperoncini", "Focused on the flavor of tasty peperoncini.", "$", 1);
+            restaurant1.Save();
+            restaurant2.Save();
+            restaurant3.Save();
+
+            restaurant2.Delete();
+            List<Restaurant> expectedRestaurants = new List<Restaurant> { restaurant1, restaurant3 };
+            List<Restaurant> restaurantResults = Restaurant.GetAll();
+
+            Assert.Equal(expectedRestaurants, restaurantResults);
+        }
+
         public void Dispose()
         {
             Restaurant.DeleteAll();
