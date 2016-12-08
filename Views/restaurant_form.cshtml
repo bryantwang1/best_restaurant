@@ -1,0 +1,42 @@
+@{
+    Layout="Shared/_Layout.cshtml";
+}
+
+<h1>Add a Restaurant</h1>
+
+@if(@Model.Count > 0)
+{
+    <form action="/restaurants/added" method="post">
+    <div class="form-group">
+    <label for="restaurant-name">Name: </label>
+    <input type="text" name="restaurant-name" id="restaurant-name" placeholder="Tako" required autofocus>
+    </div>
+    <div class="form-group">
+    <label for="restaurant-description">Description: </label>
+    <input type="text" name="restaurant-description" id="restaurant-description" placeholder="Fresh sushi, beautiful decor." required>
+    </div>
+    <div class="form-group" id="radio-buttons">
+    <span>Price Range: </span>
+    <input type="radio" name="restaurant-price" value="$" checked><span id="radio-label">$</span>
+    <input type="radio" name="restaurant-price" value="$$"><span id="radio-label">$$</span>
+    <input type="radio" name="restaurant-price" value="$$$"><span id="radio-label">$$$</span>
+    <input type="radio" name="restaurant-price" value="$$$$"><span id="radio-label">$$$$</span>
+    <input type="radio" name="restaurant-price" value="$$$$$"><span id="radio-label">$$$$$</span>
+    </div>
+    <div class="form-group">
+    <span>Cuisine: </span>
+    <select name="cuisine-id">
+    @foreach (var cuisine in Model)
+    {
+        <option value="@cuisine.GetId()">@cuisine.GetName()</option>
+    }
+    </select>
+    </div>
+    </form>
+}
+else
+{
+    <h2>You need to have at least one cuisine before you can add restaurants.</h2>
+}
+<h4><a href="/cuisines/new">Click here to add a new cuisine.</a></h4>
+<h4><a href="/">Click here to return to the homepage without adding a restaurant.</a></h4>

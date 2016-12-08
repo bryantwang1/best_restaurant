@@ -90,6 +90,35 @@ namespace BestRestaurant.Objects
             return _cuisineId;
         }
 
+        public string GetCuisineName()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT name FROM cuisines WHERE cuisine_id = @CuisineId;", conn);
+            SqlParameter cuisineParameter = new SqlParameter();
+            cuisineParameter.ParameterName = "@CuisineId";
+            cuisineParameter.Value = this.GetCuisineId();
+            cmd.Parameters.Add(cuisineParameter);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            string cuisineName = null;
+            while(rdr.Read())
+            {
+                cuisineName = rdr.GetString(0);
+            }
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+            return cuisineName;
+        }
+
         public void Save()
         {
             SqlConnection conn = DB.Connection();
